@@ -1,18 +1,17 @@
-import React from 'react';
-import {NavLink} from 'react-router-dom';
-import './NavBar.css'
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
+import "./NavBar.css";
 
-const NavBar = (props) => {
-	console.log(props)
-	function onLogoutClick(event) {
-		event.preventDefault();
-	
-		this.props.updateIsLoggedInStatus(false);
-		// history.replace("/");
-		document.location.hash = "/";
-	  };
-	return (
-		<React.Fragment>
+class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isLoggedIn: false };
+  }
+
+  render() {
+	console.log(this.props);
+    return (
+      <React.Fragment>
         <nav className="navbar navbar-expand-lg navbar-light  highlight">
           <div className="container-fluid">
             <a className="navbar-brand" href="\#">
@@ -34,7 +33,7 @@ const NavBar = (props) => {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                {!props.isLoggedIn ? (
+                {!this.props.isLoggedIn ? (
                   <li className="nav-item">
                     <NavLink
                       to="/"
@@ -48,7 +47,7 @@ const NavBar = (props) => {
                 ) : (
                   ""
                 )}
-                {props.isLoggedIn ? (
+                {this.props.isLoggedIn ? (
                   <li className="nav-item">
                     <NavLink
                       to="/dashboard"
@@ -62,7 +61,7 @@ const NavBar = (props) => {
                   ""
                 )}
 
-                {props.isLoggedIn ? (
+                {this.props.isLoggedIn ? (
                   <li className="nav-item">
                     <NavLink
                       to="/customers"
@@ -76,7 +75,7 @@ const NavBar = (props) => {
                   ""
                 )}
 
-                {props.isLoggedIn ? (
+                {this.props.isLoggedIn ? (
                   <li className="nav-item">
                     <NavLink
                       to="/cart"
@@ -90,10 +89,10 @@ const NavBar = (props) => {
                   ""
                 )}
 
-                {props.isLoggedIn ? (
+                {this.props.isLoggedIn ? (
                   <li className="nav-item">
                     <a
-                      href="/#"
+                      href="/"
                       className="nav-link"
                       onClick={this.onLogoutClick}
                     >
@@ -110,7 +109,15 @@ const NavBar = (props) => {
           {/* end of container-fluid */}
         </nav>
       </React.Fragment>
-	);
-};
+    );
+  }
+
+  onLogoutClick = (event) => {
+    event.preventDefault();
+    this.props.updateIsLoggedInStatus(false);
+     
+    document.location = "/";
+  };
+}
 
 export default NavBar;

@@ -17,9 +17,9 @@ export default class App extends Component {
   }
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <NavBar
-        isLoggedIn = {this.props.isLoggedIn}
+        isLoggedIn = {this.state.isLoggedIn}
         updateIsLoggedInStatus  = {this.updateIsLoggedInStatus}
         />
        <div className="container-fluid">
@@ -56,7 +56,11 @@ export default class App extends Component {
           </div>
         </div> 
       </Router>
-    )
+    );
+  }
+  updateIsLoggedInStatus = (status) =>
+  {
+    this.setState({isLoggedIn : status});
   }
 }
 
