@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import {Menu,Segment} from 'semantic-ui-react';
+
 import './App.css'; 
 import React,{Component,useEffect,useState} from 'react';
 import {Route,Router,Switch} from 'react-router';
 import history  from './history';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NavBar from './Components/NavBar/NavBar'; 
+import NewUser from './Components/NewUser/NewUser';
 import Login from './Components/Login/Login';
 
 
@@ -23,14 +25,11 @@ export default class App extends Component {
         updateIsLoggedInStatus  = {this.updateIsLoggedInStatus}
         />
        <div className="container-fluid">
-          <div className="row">
-            {/* <div className="col-lg-3">
-              {this.state.isLoggedIn ? <SideBar /> : ""}
-            </div> */}
+           
 
             <div className="col-lg-9">
               <Switch>
-                <Route
+              <Route
                   path="/"
                   exact
                   render={(props) => (
@@ -40,6 +39,16 @@ export default class App extends Component {
                     />
                   )}
                 />
+                {/* <Route
+                  path="/"
+                  exact
+                  render={(props) => (
+                    <Login
+                      {...props}
+                      updateIsLoggedInStatus={this.updateIsLoggedInStatus}
+                    />
+                  )}
+                /> */}
                 <Route path="/dashboard" exact component={Dashboard} />
                 {/* <Route path="/customers" exact component={CustomersList} />
                 <Route path="/cart" exact component={ShoppingCart} />
@@ -54,7 +63,7 @@ export default class App extends Component {
               </Switch>
             </div>
           </div>
-        </div> 
+        
       </Router>
     );
   }

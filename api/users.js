@@ -32,5 +32,26 @@ router.get('/',(req,res) =>
 	})
 	
 });
+router.post('/',(req,res)=>
+{
+	const {email , password} = req.body;
+	console.log(req.body);
+ 
+	const newUser  = new User({
+		email : email,
+		password : password
+	})
+	newUser.save()
+	.then(() => res.json({
+		message : "Created account succesfully"
+	}))
+	.catch((err) =>
+	{
+		res.status(400).json({
+			"error" : err,
+			"message" : "Error creating account"
+		})
+	})
+})
 
 module.exports = router;
