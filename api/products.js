@@ -1,15 +1,28 @@
-import axios from 'axios';
-import express from 'express';
-const router = express.Router();
+const express = require('express');
+const axios = require('axios');
 
-router.get('/',(req,res) =>
+const router = express.Router();
+const {parse,stringify,toJSON,fromJSON} = require('flatted');
+router.get('/',(req,response) =>
 {
 
 	console.log("Request Received in product ");
-	res.json({
-		data : 
-		message : 
+	axios.get('https://www.amazon.in/s?k=laptops&ref=nb_sb_noss_2')
+	.then((res) =>
+	{
+		console.log("Res received");
+		console.log(res);
+		
+		response.json({
+			data : res.data,
+			message : "Data extracted succesfully"
+		})
 	})
+	.catch((err) =>
+	{
+		console.error(err);
+	})
+	 
 })
 
 

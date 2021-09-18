@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '/')));
 const port = process.env.PORT || 5000;
 app.get('*',(req,res) =>
 {
-	console.log(`Request received ${req}`);
+	
 	res.sendFile(path.join(__dirname,'../'));
 })
 app.listen(port,(req,res) =>
