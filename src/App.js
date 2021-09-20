@@ -24,10 +24,10 @@ export default class App extends Component {
         isLoggedIn = {this.state.isLoggedIn}
         updateIsLoggedInStatus  = {this.updateIsLoggedInStatus}
         />
-       <div className="container-fluid">
+        
            
 
-            <div className="col-lg-9">
+            
               <Switch>
               <Route
                   path="/"
@@ -61,8 +61,8 @@ export default class App extends Component {
                 />
                 <Route path="/*" component={NoMatchPage} /> */}
               </Switch>
-            </div>
-          </div>
+         
+      
         
       </Router>
     );

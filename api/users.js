@@ -5,8 +5,8 @@ const User = require('../models/user');
 router.use(express.json());
 router.get('/',(req,res) =>
 {
-	console.log("REQUEST ");
-	console.log(req.query);
+	// console.log("REQUEST ");
+	// console.log(req.query);
 	const {email,password} = req.query;
 	User.findOne({email : email,password : password },(err,result) =>
 	{
@@ -35,7 +35,7 @@ router.get('/',(req,res) =>
 router.post('/',(req,res)=>
 {
 	const {email , password} = req.body;
-	console.log(req.body);
+ 
  
 	const newUser  = new User({
 		email : email,

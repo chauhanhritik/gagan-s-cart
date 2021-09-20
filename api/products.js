@@ -6,12 +6,13 @@ const {parse,stringify,toJSON,fromJSON} = require('flatted');
 router.get('/',(req,response) =>
 {
 
-	console.log("Request Received in product ");
-	axios.get('https://www.amazon.in/s?k=laptops&ref=nb_sb_noss_2')
+	  
+
+	axios.get(`https://www.amazon.in/s?k=${req.query.data}&ref=nb_sb_noss_2`)
 	.then((res) =>
 	{
-		console.log("Res received");
-		console.log(res);
+		// console.log("Res received");
+		// console.log(res);
 		
 		response.json({
 			data : res.data,

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		/* content: '★★★★★'; */
+
+		.container
+		{
+			position: absolute;
+		}
+		#num2::before {
+			position: relative;
+			content: '★★★★★';
+			background: transparent;
+			top: 2.5vh;
+			color: goldenrod;
+
+			z-index: -1;
+
+
+		}
+
+
+		#num1 {
+			width: 10vh;
+			float: right;
+			transform: translateX(-2vh);
+			 
+			left: 10vh;
+			position: relative;
+			background-color: rgba(165, 109, 13, 0.842);
+			z-index: 1;
+
+		}
+
+		#num3 {
+			width: 10vh;
+			bottom: 2.8vh;
+			position: relative;
+			background-color: rgb(255, 251, 247);
+			z-index: -2;
+		}
+	</style>
+</head>
+
+<body>
+	<div class='container'>
+
+		<div id='num2'></div>
+		<div id='num1'>&ensp;&ensp;&ensp;</div>
+		<div id='num3'>&ensp;&ensp;&ensp;</div>
+	</div>
+
+</body>
+
+</html>

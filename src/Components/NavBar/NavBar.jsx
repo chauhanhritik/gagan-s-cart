@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import {Button,Header,Segment,Grid,Search} from 'semantic-ui-react'
 import "./NavBar.css";
 
 class NavBar extends Component {
@@ -9,7 +10,7 @@ class NavBar extends Component {
   }
 
   render() {
-	console.log(this.props);
+    console.log(this.props);
     return (
       <React.Fragment>
         <nav className="navbar navbar-expand-lg navbar-light  highlight">
@@ -103,6 +104,39 @@ class NavBar extends Component {
                   ""
                 )}
               </ul>
+              <div style={{ float: "right" }} className="nav-item">
+               
+                  {/* <NavLink to="/customers" activeClassName="active"  className="nav-link">
+                    Customers
+                  </NavLink> */}
+                  <Grid>
+      <Grid.Column width={6}>
+        <Search
+          // loading={loading}
+          // onResultSelect={(e, data) =>
+          //   dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+          // }
+          // onSearchChange={handleSearchChange}
+          // results={results}
+          value={{'search'}}
+        />
+      </Grid.Column>
+
+      <Grid.Column width={10}>
+        <Segment>
+          <Header>State</Header>
+          <pre style={{ overflowX: 'auto' }}>
+            {JSON.stringify({ loading, results, value }, null, 2)}
+          </pre>
+          <Header>Options</Header>
+          <pre style={{ overflowX: 'auto' }}>
+            {JSON.stringify(source, null, 2)}
+          </pre>
+        </Segment>
+      </Grid.Column>
+    </Grid>
+                 
+              </div>
             </div>
             {/* end of navbar-collapse */}
           </div>
@@ -115,7 +149,7 @@ class NavBar extends Component {
   onLogoutClick = (event) => {
     event.preventDefault();
     this.props.updateIsLoggedInStatus(false);
-     
+
     document.location = "/";
   };
 }
