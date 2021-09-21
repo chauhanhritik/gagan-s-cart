@@ -1,11 +1,55 @@
 .title {
+  color : #0F1109;
   max-width: 50vh;
   font-size: 3vh !important;
-  cursor:pointer;
+  cursor: pointer;
 }
-.productImage
+.ui.items > .item > .image > img {
+  width: auto !important;
+  height: auto !important;
+ 
+}
+ 
+.s-image-container {
+  display: flex;
+ min-width: 30vh;
+}
+.s-image {
+  
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 30vh;
+  max-height: 100%;
+  padding-right:25%; 
+ 
+
+}
+
+.ui.items>.item .meta :last-child
 {
-	width: 30vh !important;
-	height : 30vh m !important;
-	top : 5vh;
+  background-color: #8A81FF;
+  color :whitesmoke;
+} 
+.ui.segment{
+  margin-bottom: 0rem !important;
+}
+.ui.compact.segment {
+  border : none !important;
+  box-shadow: none !important; 
+  display: table !important;
+  height: 50px !important;
+  
+  
+}
+.ui.divider:not(.vertical):not(.horizontal) {
+  border-top: 2px solid rgba(34,36,38,.15);
+  border-bottom: 2px solid rgba(255,255,255,.1);
+ 
+}
+.ui.items>.item>.content a:not(.ui)
+{
+  text-decoration:  none !important;
 }

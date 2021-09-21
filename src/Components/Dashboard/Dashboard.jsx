@@ -15,10 +15,11 @@ class Dashboard extends Component {
     };
   }
   componentDidMount = () => {
+    console.log(this.props);
     axios
       .get("/api/products", {
         params: {
-          data: "ram",
+          data: this.props.match.params.id,
         },
       })
       .then(async (res) => {

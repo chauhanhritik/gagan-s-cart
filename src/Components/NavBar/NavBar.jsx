@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import {Button,Header,Segment,Grid,Search} from 'semantic-ui-react'
-import "./NavBar.css";
+import { NavLink, Redirect ,useHistory } from "react-router-dom";
+import axios from "axios";
+import { Button, Header, Segment, Grid, Search } from "semantic-ui-react";
+import "./NavBar.css"; 
+
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: false };
+    this.state = { isLoggedIn: false, searchValue: null };
+   
   }
 
   render() {
@@ -104,39 +107,47 @@ class NavBar extends Component {
                   ""
                 )}
               </ul>
-              <div style={{ float: "right" }} className="nav-item">
-               
-                  {/* <NavLink to="/customers" activeClassName="active"  className="nav-link">
+
+              {/* <NavLink to="/customers" activeClassName="active"  className="nav-link">
                     Customers
                   </NavLink> */}
-                  <Grid>
-      <Grid.Column width={6}>
-        <Search
-          // loading={loading}
-          // onResultSelect={(e, data) =>
-          //   dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
-          // }
-          // onSearchChange={handleSearchChange}
-          // results={results}
-          value={{'search'}}
-        />
-      </Grid.Column>
-
-      <Grid.Column width={10}>
-        <Segment>
-          <Header>State</Header>
-          <pre style={{ overflowX: 'auto' }}>
-            {JSON.stringify({ loading, results, value }, null, 2)}
-          </pre>
-          <Header>Options</Header>
-          <pre style={{ overflowX: 'auto' }}>
-            {JSON.stringify(source, null, 2)}
-          </pre>
-        </Segment>
-      </Grid.Column>
-    </Grid>
-                 
-              </div>
+              <Grid>
+                <Grid.Row width={16}>
+                  <Grid.Column width={4}>
+                    <Button
+                      circular
+                      color="green"
+                      onClick={this.onSearch}
+                    >
+                      Search
+                      {/* <NavLink 
+                      as='div'
+                      to={`/dashboard/${this.state.searchValue}`}>
+                      
+                        Search
+                      </NavLink> */}
+                    </Button>
+                  </Grid.Column>
+                  <Grid.Column width={12}>
+                    {" "}
+                    <Search
+                      fluid
+                      // loading={loading}
+                      // onResultSelect={(e, data) =>
+                      //   dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+                      // }
+                      // onSearchChange={handleSearchChange}
+                      // results={results}
+                      onSearchChange={(event) => {
+                        this.setState({
+                          searchValue: event.target.value,
+                        });
+                      }}
+                      value={this.state.searchValue}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             </div>
             {/* end of navbar-collapse */}
           </div>
@@ -151,6 +162,14 @@ class NavBar extends Component {
     this.props.updateIsLoggedInStatus(false);
 
     document.location = "/";
+  };
+  onSearch = () => {
+     
+    this.props.history.push(`/dashboard/${this.state.searchValue}`);
+    this.props.history.go(0);
+    // document.location = 
+    
+    
   };
 }
 

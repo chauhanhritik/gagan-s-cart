@@ -10,6 +10,7 @@ import {
   Container,
   Label,
   Button,
+  Divider,
 } from "semantic-ui-react";
 import "./ProductTile.css";
 export default class ProductTile extends Component {
@@ -27,10 +28,14 @@ export default class ProductTile extends Component {
   };
   getRating = (ratingStr) => {
     console.log(ratingStr);
-    if (ratingStr === undefined) {
-      return 0;
+    if (ratingStr.includes("out of")) {
+      try {
+        return parseFloat(ratingStr.split(" out of ")[0]);
+      } catch {
+        return 0;
+      }
     } else {
-      return parseFloat(ratingStr.split(" out of ")[0]);
+      return 0;
     }
   };
   hoveredRefer = (event) => {
@@ -49,32 +54,46 @@ export default class ProductTile extends Component {
   render() {
     return (
       <>
-        <Item divided>
-          <Item.Image size="medium" src={this.props.image}  className='productImage'/>
+        <Item >
+          <a href={this.props.link}>
+            <div class="s-image-container" onMouseEnter={this.hoverOnImage}>
+              <img class="s-image" src={this.props.image} alt="product" />
+            </div>
+          </a>
+
+          {/* <Item.Image   src={this.props.image} /> */}
 
           <Item.Content>
             <Item.Header as="div">
-              <Header
-                id={this.props.id}
-                onClick={this.productDetails}
-                onMouseEnter={this.hoveredRefer}
-                onMouseLeave={this.hoveredOff}
-                size="medium"
-                className="title"
-              >
-                {this.normalizeProductName(this.props.name)}
-              </Header>
+              <a href={this.props.link}>
+                <Header
+                  id={this.props.id}
+                  onMouseEnter={this.hoveredRefer}
+                  onMouseLeave={this.hoveredOff}
+                  size="medium"
+                  className="title"
+                >
+                  {this.normalizeProductName(this.props.name)}
+                </Header>
+              </a>
 
-              <StarRatings
-                rating={this.getRating(this.props.rating)}
-                starRatedColor="#FFE85A"
-                starDimension="20px"
-                starSpacing="2.5px"
-              />
+              {this.props.rating !== undefined ? (
+                <StarRatings
+                  rating={this.getRating(this.props.rating)}
+                  starRatedColor="#FFE85A"
+                  starDimension="20px"
+                  starSpacing="2.5px"
+                />
+              ) : (
+                <Header size="tiny" color="red">
+                  No ratings yet
+                </Header>
+              )}
             </Item.Header>
             <Item.Meta>
-              <Label size="medium" color="green">
-                <Icon name="dollar sign" color="white" /> {this.props.price}
+              <Label size="large" className="priceTag">
+                <Icon name="rupee sign" color="white" />{" "}
+                {this.props.price + ".00"}
               </Label>
             </Item.Meta>
             <Item.Description></Item.Description>
@@ -89,6 +108,7 @@ export default class ProductTile extends Component {
             </Item.Extra>
           </Item.Content>
         </Item>
+        <Divider />
 
         {/* <Item>
       <Item.Image size='tiny' src='https://react.semantic-ui.com/images/wireframe/image.png' />

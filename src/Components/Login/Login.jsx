@@ -5,10 +5,9 @@ export default class Login extends Component {
     super(props);
     this.state = { email: "", password: "", message: "" };
   }
-  
+
   render() {
-	  
-    return (  
+    return (
       <div>
         <h4 className="m-1 p-2 border-bottom">Login</h4>
         <div className="form-group form-row">
@@ -57,18 +56,14 @@ export default class Login extends Component {
       .then((res) => {
         this.setState({
           message: <span className="text-success">Succesfully Logged in </span>,
-
         });
-		this.props.history.replace("/dashboard");
+        this.props.history.replace("/dashboard/newProduct");
         this.props.updateIsLoggedInStatus(true);
-		 
-      }).catch((err) =>
-	  {
-		this.setState({
-			message : <span className="text-danger">Invalid login try again</span>
-		})
-	  })
-
-    
+      })
+      .catch((err) => {
+        this.setState({
+          message: <span className="text-danger">Invalid login try again</span>,
+        });
+      });
   };
 }
