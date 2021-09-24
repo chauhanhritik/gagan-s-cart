@@ -1,15 +1,28 @@
 import React, { Component } from "react";
-import { NavLink, Redirect ,useHistory } from "react-router-dom";
+import { NavLink, Redirect, useHistory } from "react-router-dom";
+import {Icon} from 'semantic-ui-react';
 import axios from "axios";
-import { Button, Header, Segment, Grid, Search } from "semantic-ui-react";
-import "./NavBar.css"; 
-
+import {
+  Button,
+  Header,
+  Segment,
+  Grid,
+  Search,
+  Label,
+} from "semantic-ui-react";
+import "./NavBar.css";
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: false, searchValue: null };
-   
+    this.state = {
+      isLoggedIn: false,
+      searchValue: decodeURIComponent(
+        new URL(document.location.href).toString().split("dashboard/")[1]
+      ),
+      results: [],
+      loading: false,
+    };
   }
 
   render() {
@@ -111,34 +124,31 @@ class NavBar extends Component {
               {/* <NavLink to="/customers" activeClassName="active"  className="nav-link">
                     Customers
                   </NavLink> */}
+              
               <Grid>
                 <Grid.Row width={16}>
                   <Grid.Column width={4}>
-                    <Button
-                      circular
-                      color="green"
-                      onClick={this.onSearch}
-                    >
+                    <Button circular color="green" onClick={this.onSearch}>
                       Search
-                      {/* <NavLink 
-                      as='div'
-                      to={`/dashboard/${this.state.searchValue}`}>
-                      
-                        Search
-                      </NavLink> */}
+                 
                     </Button>
                   </Grid.Column>
                   <Grid.Column width={12}>
                     {" "}
                     <Search
                       fluid
-                      // loading={loading}
-                      // onResultSelect={(e, data) =>
-                      //   dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
-                      // }
+                      loading={this.state.loading}
+                      onResultSelect={(e, data) => {
+                        this.onSearch(data.result.title);
+                        this.setState({
+                          searchValue: data.result.title,
+                        });
+                      }}
                       // onSearchChange={handleSearchChange}
-                      // results={results}
+                      results={this.state.results}
+                      resultRenderer={({ title }) => <Label content={title} />}
                       onSearchChange={(event) => {
+                        this.handleSearchChange(event);
                         this.setState({
                           searchValue: event.target.value,
                         });
@@ -148,6 +158,13 @@ class NavBar extends Component {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
+              <NavLink 
+                    to="/shopping/cart"
+                    className="nav-link"
+                    activeClassName="active"
+              >
+                <Icon name='cart' />
+              </NavLink>
             </div>
             {/* end of navbar-collapse */}
           </div>
@@ -157,19 +174,52 @@ class NavBar extends Component {
     );
   }
 
+  handleSearchChange = (event) => {
+    this.setState({
+      searchValue : event.target.value
+    })
+    this.setState({
+      loading: true,
+    });
+    axios
+      .get("/api/suggestions", {
+        params: {
+          data: event.target.value,
+        },
+      })
+      .then((res) => {
+        const results = [];
+
+        res.data.data.suggestions.map((suggestion) => {
+          results.push({
+            title: suggestion.value,
+          });
+        });
+        this.setState({
+          results: results,
+        });
+        this.setState({
+          loading: false,
+        });
+      })
+      .catch((err) => {
+        console.log("ERROR");
+        console.log(err);
+      });
+  };
   onLogoutClick = (event) => {
     event.preventDefault();
     this.props.updateIsLoggedInStatus(false);
 
     document.location = "/";
   };
-  onSearch = () => {
-     
-    this.props.history.push(`/dashboard/${this.state.searchValue}`);
-    this.props.history.go(0);
-    // document.location = 
-    
-    
+  onSearch = (keyword) => {
+      typeof(keyword) === 'string'?this.props.history.push(`/dashboard/${keyword}`) : this.props.history.push(`/dashboard/${this.state.searchValue}`) 
+      
+      this.props.history.go(0);
+   
+
+    // document.location =
   };
 }
 

@@ -1,0 +1,8 @@
+.img-hover
+{
+	margin: 1vh;
+	border : solid rgba(0, 0, 0, 0.4) 1px;
+	border-radius: 5%; 
+	cursor :pointer;
+}
+

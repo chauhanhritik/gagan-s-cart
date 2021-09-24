@@ -9,6 +9,8 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import NavBar from './Components/NavBar/NavBar';
 import NewUser from './Components/NewUser/NewUser';
 import Login from './Components/Login/Login';
+import ProductDetails from './Components/ProductDetails/ProductDetails';
+import Cart from './Components/Cart/Cart'
 
 
 export default class App extends Component {
@@ -23,6 +25,7 @@ export default class App extends Component {
 
 
         <NavBar
+
           history={history}
           isLoggedIn={this.state.isLoggedIn}
           updateIsLoggedInStatus={this.updateIsLoggedInStatus}
@@ -54,8 +57,12 @@ export default class App extends Component {
                     />
                   )}
                 /> */}
-          <Route  match path="/dashboard/:id" 
-             component={Dashboard} />
+          <Route match path="/dashboard/products/:name/:asin"
+            component={ProductDetails}
+          />
+          <Route match path="/dashboard/:id"
+            component={Dashboard} />
+          <Route match path="/shopping/cart" component={Cart} />
           {/* <Route path="/customers" exact component={CustomersList} />
                 <Route path="/cart" exact component={ShoppingCart} />
                 <Route path="/product/:id" component={ProductByID} />

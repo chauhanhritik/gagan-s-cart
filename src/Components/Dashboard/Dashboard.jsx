@@ -80,7 +80,10 @@ class Dashboard extends Component {
                   <Segment key={k} compact>
                     <Item.Group>
                       {" "}
-                      <ProductTile {...item} />{" "}
+                      <ProductTile
+                        {...item}
+                        history={this.props.history}
+                      />{" "}
                     </Item.Group>
                   </Segment>
                 ))}
