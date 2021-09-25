@@ -4,11 +4,12 @@ const Shopping = require('../models/shopping');
 router.use(express.json());
 router.post("/", (req, res) => {
 
-	const { pid, pname, pprice,pimage } = req.body;
+	const { pid, puser,pname, pprice,pimage } = req.body;
 
 
 	const newProduct = new Shopping({
 		pid: pid,
+		puser : puser,
 		pname: pname,
 		pprice: pprice,
 		pimage : pimage,
@@ -27,7 +28,9 @@ router.post("/", (req, res) => {
 		})
 })
 router.get('/', (req, res) => {
-	Shopping.find({}, (err, result) => {
+	console.log(req.body);
+	const {user} = req.body;
+	Shopping.find({	puser : user}, (err, result) => {
 		!err ? res.status(200).json({ data: result, message: 'data fetched succesfully' }) : res.status(400).json({ error: err })
 	})
 

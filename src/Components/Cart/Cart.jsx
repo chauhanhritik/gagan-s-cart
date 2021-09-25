@@ -37,7 +37,9 @@ export default class Cart extends Component {
   componentDidMount = async () => {
     const products = [];
     axios
-      .get("/api/shopping")
+      .get("/api/shopping",{
+        user : this.props.userDetails.user
+      })
       .then((res) => {
         console.log(res.data.data);
         res.data.data.map(async (product, k) => {
@@ -108,7 +110,10 @@ export default class Cart extends Component {
                           <Image className="s-image" src={product.pimage} />
                         </Grid.Column>
                         <Grid.Column>
-                          <Header>
+                          <Header
+                            as="a"
+                            href={`/dashboard/products/${product.pname}/${product.pid}`}
+                          >
                             {this.normalizeProductName(product.pname)}
                           </Header>
                           <Grid>

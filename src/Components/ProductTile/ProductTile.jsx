@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, NavLink } from "react";
 import StarRatings from "react-star-ratings";
-import axios from 'axios';
+import axios from "axios";
 import {
   Item,
   Image,
@@ -51,16 +51,18 @@ export default class ProductTile extends Component {
     event.preventDefault();
     console.log(event.target.id);
   };
-  showProductDetails = () =>
-  {
-    this.props.history.replace(`/dashboard/products/${this.props.link}`);
+  showProductDetails = () => {
+    this.props.history.replace(
+      `/dashboard/products/${this.props.name}/${this.props.id}`
+    );
+    // this.props.history.replace(`/dashboard/products/${this.props.link}`);
   };
 
   render() {
     return (
       <>
-        <Item >
-          <a >
+        <Item>
+          <a>
             <div class="s-image-container" onMouseEnter={this.hoverOnImage}>
               <img class="s-image" src={this.props.image} alt="product" />
             </div>
@@ -70,7 +72,7 @@ export default class ProductTile extends Component {
 
           <Item.Content>
             <Item.Header as="div">
-              <a href={`/dashboard/products/${this.props.name}/${this.props.id}`}>
+              <a onClick={this.showProductDetails}>
                 <Header
                   id={this.props.id}
                   onMouseEnter={this.hoveredRefer}
@@ -81,6 +83,20 @@ export default class ProductTile extends Component {
                   {this.normalizeProductName(this.props.name)}
                 </Header>
               </a>
+              {/* <a
+
+                href={`/dashboard/products/${this.props.name}/${this.props.id}`}
+              >
+                <Header
+                  id={this.props.id}
+                  onMouseEnter={this.hoveredRefer}
+                  onMouseLeave={this.hoveredOff}
+                  size="medium"
+                  className="title"
+                >
+                  {this.normalizeProductName(this.props.name)}
+                </Header>
+              </a> */}
 
               {this.props.rating !== undefined ? (
                 <StarRatings

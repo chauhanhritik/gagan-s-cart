@@ -7,6 +7,11 @@ const shoppingSchema = new Schema({
 		type: String,
 		required: true
 	},
+	puser:
+	{
+		type : String,
+		require  : true,	
+	},
 	pname:
 	{
 		type: String,

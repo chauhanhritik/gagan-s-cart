@@ -16,19 +16,16 @@ import Cart from './Components/Cart/Cart'
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: false };
+    this.state = { user: null, loginStatus: false };
   }
   render() {
     return (
       <Router history={history}>
-
-
-
         <NavBar
 
           history={history}
-          isLoggedIn={this.state.isLoggedIn}
-          updateIsLoggedInStatus={this.updateIsLoggedInStatus}
+          userDetails={{ loginStatus: this.state.loginStatus, user: this.state.user }}
+          updateCurrentUserState={this.updateCurrentUserState}
         />
 
 
@@ -43,7 +40,8 @@ export default class App extends Component {
             render={(props) => (
               <Login
                 {...props}
-                updateIsLoggedInStatus={this.updateIsLoggedInStatus}
+                userDetails={{ loginStatus: this.state.loginStatus, user: this.state.user }}
+                updateCurrentUserState={this.updateCurrentUserState}
               />
             )}
           />
@@ -58,11 +56,28 @@ export default class App extends Component {
                   )}
                 /> */}
           <Route match path="/dashboard/products/:name/:asin"
-            component={ProductDetails}
+            render={(props) => (
+              <ProductDetails
+                {...props}
+                userDetails={{ loginStatus: this.state.loginStatus, user: this.state.user }}
+                updateCurrentUserState={this.updateCurrentUserState}
+              />
+            )}
+          // render={(props) => {
+          //   <ProductDetails
+          //   userDetails={{ loginStatus: this.state.loginStatus, user: this.state.user }}
+          //   />
+          // }}
           />
           <Route match path="/dashboard/:id"
             component={Dashboard} />
-          <Route match path="/shopping/cart" component={Cart} />
+          <Route match path="/shopping/cart"
+            render={(props) => (
+              <Cart
+                userDetails={{ loginStatus: this.state.loginStatus, user: this.state.user }}
+              />
+            )}
+          />
           {/* <Route path="/customers" exact component={CustomersList} />
                 <Route path="/cart" exact component={ShoppingCart} />
                 <Route path="/product/:id" component={ProductByID} />
@@ -80,8 +95,13 @@ export default class App extends Component {
       </Router>
     );
   }
-  updateIsLoggedInStatus = (status) => {
-    this.setState({ isLoggedIn: status });
+  updateCurrentUserState = ({ user, loginStatus }) => {
+    console.log("user : " + user + " | login : " + loginStatus);
+    this.setState({
+      user: user,
+      loginStatus: loginStatus
+
+    });
   }
 }
 

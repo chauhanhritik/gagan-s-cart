@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, Redirect, useHistory } from "react-router-dom";
-import {Icon} from 'semantic-ui-react';
+import { Icon } from "semantic-ui-react";
 import axios from "axios";
 import {
   Button,
@@ -64,7 +64,12 @@ class NavBar extends Component {
                 ) : (
                   ""
                 )}
-                {this.props.isLoggedIn ? (
+                {this.props.userDetails.user ? (
+                  <li>Deliver to {this.props.userDetails.user}</li>
+                ) : (
+                  ""
+                )}
+                {/* {this.props.isLoggedIn ? (
                   <li className="nav-item">
                     <NavLink
                       to="/dashboard"
@@ -118,19 +123,18 @@ class NavBar extends Component {
                   </li>
                 ) : (
                   ""
-                )}
+                )} */}
               </ul>
 
               {/* <NavLink to="/customers" activeClassName="active"  className="nav-link">
                     Customers
                   </NavLink> */}
-              
-              <Grid>
+
+              <Grid className="search-bar">
                 <Grid.Row width={16}>
                   <Grid.Column width={4}>
                     <Button circular color="green" onClick={this.onSearch}>
                       Search
-                 
                     </Button>
                   </Grid.Column>
                   <Grid.Column width={12}>
@@ -158,12 +162,12 @@ class NavBar extends Component {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <NavLink 
-                    to="/shopping/cart"
-                    className="nav-link"
-                    activeClassName="active"
+              <NavLink
+                to="/shopping/cart"
+                className="nav-link"
+                activeClassName="active"
               >
-                <Icon name='cart' />
+                <Icon name="cart" />
               </NavLink>
             </div>
             {/* end of navbar-collapse */}
@@ -176,8 +180,8 @@ class NavBar extends Component {
 
   handleSearchChange = (event) => {
     this.setState({
-      searchValue : event.target.value
-    })
+      searchValue: event.target.value,
+    });
     this.setState({
       loading: true,
     });
@@ -209,15 +213,15 @@ class NavBar extends Component {
   };
   onLogoutClick = (event) => {
     event.preventDefault();
-    this.props.updateIsLoggedInStatus(false);
+    this.props.updateCurrentUserState({user : null, loginStatus : false});
 
     document.location = "/";
   };
   onSearch = (keyword) => {
-      typeof(keyword) === 'string'?this.props.history.push(`/dashboard/${keyword}`) : this.props.history.push(`/dashboard/${this.state.searchValue}`) 
-      
-      this.props.history.go(0);
-   
+    typeof keyword === "string"
+      ? this.props.history.push(`/dashboard/${keyword}`)
+      : this.props.history.push(`/dashboard/${this.state.searchValue}`);
+    this.props.history.go(0);
 
     // document.location =
   };

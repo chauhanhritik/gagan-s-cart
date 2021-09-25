@@ -25,6 +25,7 @@ export default class ProductDetails extends Component {
     };
   }
   componentDidMount = () => {
+    console.log("PROPS : ");
     console.log(this.props);
     const { asin, name } = this.props.match.params;
     axios
@@ -80,8 +81,6 @@ export default class ProductDetails extends Component {
       image: image,
       features: [],
       thumbImages: [],
-      // features: features(),
-      // thumbImages: thumbImages(),
     };
     features((result) => {
       Product.features = result;
@@ -153,32 +152,35 @@ export default class ProductDetails extends Component {
     );
   }
   addProduct = () => {
-    axios
-      .post("/api/shopping", {
-        pid: this.props.match.params.asin,
-        pname: this.state.productDetails.title,
-        pprice: this.state.productDetails.price,
-        pimage : this.state.productDetails.image
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // axios
-    //   .post("/api/shopping", {
+    this.props.userDetails.loginStatus
+      ? axios
+          .post("/api/shopping", {
+            pid: this.props.match.params.asin,
+            puser: this.props.userDetails.user,
+            pname: this.state.productDetails.title,
+            pprice: this.state.productDetails.price,
+            pimage: this.state.productDetails.image,
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : // axios
+        //   .post("/api/shopping", {
 
-    //       pid: this.props.match.params.asin,
-    //       pname: this.state.productDetails.title,
-    //       pprice: this.state.productDetails.price,
+        //       pid: this.props.match.params.asin,
+        //       pname: this.state.productDetails.title,
+        //       pprice: this.state.productDetails.price,
 
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+        //   })
+        //   .then((res) => {
+        //     console.log(res);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
+        console.log("Not Logged In");
   };
 }
